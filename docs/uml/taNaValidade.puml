@@ -1,0 +1,140 @@
+@startuml
+title TáNaValidade UML
+skinparam ClassAttributeIconSize 0
+skinparam Linetype polyline
+hide empty members
+top to bottom direction
+package "Utilizadores e casas" {
+    class User {
+        -id: Integer
+        -nome: String
+        -email: String
+        -password: String [0..1]
+        -alertas: Boolean
+        -antecedenciaAlertasDias: Integer
+        -/totalPontos: Integer
+        +atualizarPerfil(nome, email): void
+        +configurarAlertas(ativos, dias): void
+        +calcularPontos(inicio, fim): Integer
+    }
+    class AutenticacaoExterna {
+        -id: Integer
+        -fornecedor: FornecedorLogin
+        -idExterno: String
+        -associadoEm: DateTime
+    }
+    class Habitacao {
+        -id: Integer
+        -nome: String
+        -morada: String
+        -descricao: String
+        +alterarDados(nome, morada, descricao): void
+    }
+    class MembroHabitacao {
+        -papel: PapelMembro
+        -aderiuEm: DateTime
+        +alterarPapel(papel): void
+    }
+    class ConviteHabitacao {
+        -id: Integer
+        -emailConvidado: String
+        -codigoConvite: String
+        -estado: EstadoConvite
+        -enviadoEm: DateTime
+        -respondidoEm: DateTime [0..1]
+        +aceitar(utilizador): MembroHabitacao
+        +recusar(): void
+    }
+}
+package "Gestão de alimentos" {
+    class LocalArmazenamento {
+        -id: Integer
+        -nome: String
+        -tipo: TipoLocal
+        +alterarDados(nome, tipo): void
+    }
+    class CategoriaProduto {
+        -id: Integer
+        -nome: String
+    }
+    class Produto {
+        -id: Integer
+        -nome: String
+        -codigoBarras: String [0..1]
+        -unidadePadrao: String
+    }
+    class AlimentoRegistado {
+        -id: Integer
+        -quantidade: Decimal
+        -unidade: String
+        -dataValidade: Date
+        -estado: EstadoAlimento
+        -registadoEm: DateTime
+        +atualizarQuantidade(quantidade): void
+        +mudarLocal(local): void
+        +marcarConsumido(): void
+        +marcarDescartado(): void
+        +diasAteValidade(hoje): Integer
+    }
+}
+package "Receitas e comunidade" {
+    class Receita {
+        -id: Integer
+        -titulo: String
+        -descricao: String
+        -preparacao: String
+        -tempoMinutos: Integer
+        -doses: Integer
+        -publicada: Boolean
+        -criadaEm: DateTime
+        +adicionarIngrediente(produto, quantidade, unidade): void
+        +publicar(): void
+    }
+    class IngredienteReceita {
+        -quantidade: Decimal
+        -unidade: String
+        +alterarQuantidade(quantidade): void
+    }
+    class FotoReceita {
+        -id: Integer
+        -caminhoFicheiro: String
+        -descricao: String
+        -publicadaEm: DateTime
+    }
+    class ComentarioReceita {
+        -id: Integer
+        -texto: String
+        -criadoEm: DateTime
+        +editarTexto(texto): void
+    }
+    class GostoReceita {
+        -criadoEm: DateTime
+    }
+}
+package "Pontos, medalhas e notificações" {
+    class MovimentoPontos {
+        -id: Integer
+        -motivo: MotivoPontos
+        -pontos: Integer
+        -dataMovimento: DateTime
+    }
+    class Medalha {
+        -id: Integer
+        -nome: String
+        -descricao: String
+        -criterio: String
+    }
+    class UtilizadorMedalha {
+        -conquistadaEm: DateTime
+    }
+    class Notificacao {
+        -id: Integer
+        -tipo: TipoNotificacao
+        -titulo: String
+        -mensagem: String
+        -criadaEm: DateTime
+        -lidaEm: DateTime [0..1]
+        +marcarLida(): void
+    }
+}
+@enduml
