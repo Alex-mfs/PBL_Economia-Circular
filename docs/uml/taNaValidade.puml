@@ -137,4 +137,31 @@ package "Pontos, medalhas e notificações" {
         +marcarLida(): void
     }
 }
+Utilizador "1" -- "0..*" AutenticacaoExterna : associa
+Utilizador "1" -- "0..*" MembroHabitacao : participa através de
+Habitacao "1" -- "1..*" MembroHabitacao : tem membros
+Habitacao "1" -- "0..*" ConviteHabitacao : recebe convites
+Utilizador "1" -- "0..*" ConviteHabitacao : remetente
+Utilizador "0..1" -- "0..*" ConviteHabitacao : utilizador que aceitou
+Habitacao "1" -- "0..*" LocalArmazenamento : define locais
+Habitacao "1" -- "0..*" AlimentoRegistado : guarda
+LocalArmazenamento "0..1" -- "0..*" AlimentoRegistado : localiza
+CategoriaProduto "1" -- "0..*" Produto : classifica
+Produto "1" -- "0..*" AlimentoRegistado : identifica
+Utilizador "1" -- "0..*" AlimentoRegistado : registado por
+Utilizador "1" -- "0..*" Receita : autor
+Receita "1" *-- "0..*" IngredienteReceita : contém
+Produto "1" -- "0..*" IngredienteReceita : ingrediente baseado em
+Receita "1" *-- "0..*" FotoReceita : tem fotografias
+Receita "1" -- "0..*" ComentarioReceita : recebe comentários
+Utilizador "1" -- "0..*" ComentarioReceita : escreve
+Receita "1" -- "0..*" GostoReceita : recebe gostos
+Utilizador "1" -- "0..*" GostoReceita : atribui gosto
+Utilizador "1" -- "0..*" MovimentoPontos : acumula movimentos
+Receita "0..1" -- "0..*" MovimentoPontos : origem receita
+FotoReceita "0..1" -- "0..*" MovimentoPontos : origem fotografia
+Utilizador "1" -- "0..*" UtilizadorMedalha : conquista
+Medalha "1" -- "0..*" UtilizadorMedalha : é atribuída através de
+Utilizador "1" -- "0..*" Notificacao : destinatário
+AlimentoRegistado "0..1" -- "0..*" Notificacao : origem alimento
 @enduml
